@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import JobApplication from "./JobApplication";
+import JobApplicationList from "./JobApplicationList";
+
+const API_URL = "/jobapplications";
+const headers = { 'Content-type': 'application/json' }
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [jobApplicationData, setJobApplicationData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    useEffect(() => {
+        const fetchJobApplicationData = () => {
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => setJobApplicationData(data))
+                .catch(error => setError(error))
+                .finally(setIsLoading(false));
+        };
 
-export default App
+        fetchJobApplicationData();
+    }, []);
+
+    const handleCreate = (newItem) => {
+        console.log(`newItem: ${JSON.stringify(newItem)}`)
+
+        newItem.minSalary = newItem.minSalary.trim === "" ? null : parseFloat(newItem.minSalary);
+        newItem.maxSalary = newItem.maxSalary.trim === "" ? null : parseFloat(newItem.maxSalary);
+
+        fetch(API_URL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(newItem)
+        })
+            .then(response => response.json())
+            .then(returnedItem => setJobApplicationData([...jobApplicationData, returnedItem]))
+            .catch(error => setError(error));
+    };
+
+    const handleDelete = (id) => {
+        fetch(`${API_URL}/${id}`, { method: "DELETE", headers })
+            .then(() => setJobApplicationData(jobApplicationData.filter(job => job.id !== id)))
+            .catch(error => {
+                console.error * ('Error deleting item:', error);
+                setError(error.message);
+            });
+    }
+
+    return (
+        <div>
+            <JobApplication onCreate={handleCreate} />
+            {isLoading ? (
+                <p>Loading job applications...</p>
+            ) : error ? (
+                <p>Error: {error}</p>
+            ) : (
+                <JobApplicationList
+                    data={jobApplicationData}
+                    onDelete={handleDelete}
+                />
+            )}
+        </div>
+    )
+};
+
+export default App;
