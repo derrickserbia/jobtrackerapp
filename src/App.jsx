@@ -35,7 +35,7 @@ function App() {
         })
             .then(response => response.json())
             .then(returnedItem => setJobApplicationData([...jobApplicationData, returnedItem]))
-            .catch(error => setError(error));
+            .catch(error => setError(error))
     };
 
     const handleDelete = (id) => {
