@@ -1,7 +1,3 @@
-import { Box, Button } from "@mui/material";
-import { DataGrid } from '@mui/x-data-grid';
-import dayjs from "dayjs";
-
 const term = "Job Application"
 
 function JobApplicationList({ data, onDelete }) {
@@ -41,21 +37,16 @@ function JobApplicationList({ data, onDelete }) {
     })) : [];
 
     return (
-        <Box sx={{ width: '100%', height: 400 }}>
-            <h2>{term}s</h2>
-            <DataGrid
-                rows={formattedData}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
-                        rowCount: 10
-                    }
-                }}
-                pageSizeOptions={[5, 10]}
-                checkboxSelection
-            />
-        </Box>
+        <div>
+        <h2>{term}s</h2>
+        <ul>
+            {data.map((job) => (
+                <li key={job.id}>
+                    <div>{job.jobTitle} - {job.companyName} <button type="button" onClick={() => onDelete(job.id)}>Delete</button></div>
+                </li>
+            ))}
+        </ul>
+    </div>
     )
 }
 
