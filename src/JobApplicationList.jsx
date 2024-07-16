@@ -39,13 +39,13 @@ function JobApplicationList({ data, onDelete }) {
     return (
         <div>
         <h2>{term}s</h2>
-        <ul>
+        <ol>
             {data.map((job) => (
                 <li key={job.id}>
                     <div>{job.jobTitle} - {job.companyName} <button type="button" onClick={() => onDelete(job.id)}>Delete</button></div>
                 </li>
             ))}
-        </ul>
+        </ol>
     </div>
     )
 }

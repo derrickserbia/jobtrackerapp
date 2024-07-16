@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import JobApplication from "./JobApplication";
 import JobApplicationList from "./JobApplicationList";
+import JobApplicationForm from './JobApplicationForm';
 
 const API_URL = "/jobapplications";
 const headers = { 'Content-type': 'application/json' }
@@ -49,7 +49,7 @@ function App() {
 
     return (
         <div>
-            <JobApplication onCreate={handleCreate} />
+            <JobApplicationForm onCreate={handleCreate} />
             {isLoading ? (
                 <p>Loading job applications...</p>
             ) : error ? (

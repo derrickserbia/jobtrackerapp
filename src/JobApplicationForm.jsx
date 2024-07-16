@@ -1,4 +1,4 @@
-import { useState, useEffect, forwardRef } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 
 
@@ -10,7 +10,7 @@ export const ApplicationStatus = {
     OfferReceived: 4
 }
 
-function JobApplication({ onCreate }) {
+function JobApplicationForm({ onCreate }) {
     const today = dayjs();
     const emptyForm = {
         jobTitle: "",
@@ -95,22 +95,18 @@ function JobApplication({ onCreate }) {
                     value={formData.maxSalary}
                     onChange={handleFormChange}
                 />
-                <div>
-                    <input
-                        name="jobDescription"
-                        placeholder="Enter job description"
-                        value={formData.jobDescription}
-                        onChange={handleFormChange}
-                    ></input>
-                </div>
-                <div>
-                    <input
-                        name="notes"
-                        placeholder="Enter your notes"
-                        value={formData.notes}
-                        onChange={handleFormChange}
-                    ></input>
-                </div>
+                <input
+                    name="jobDescription"
+                    placeholder="Enter job description"
+                    value={formData.jobDescription}
+                    onChange={handleFormChange}
+                />
+                <input
+                    name="notes"
+                    placeholder="Enter your notes"
+                    value={formData.notes}
+                    onChange={handleFormChange}
+                />
                 <button type="submit" onClick={() => onCreate(formData)}>Create</button>
                 <button type="button" onClick={handleCancel}>Cancel</button>
             </form>
@@ -118,4 +114,4 @@ function JobApplication({ onCreate }) {
     );
 };
 
-export default JobApplication;
+export default JobApplicationForm;
