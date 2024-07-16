@@ -1,17 +1,8 @@
 import { useState, useEffect } from "react";
-import dayjs from "dayjs";
-
-
-export const ApplicationStatus = {
-    Pending: 0,
-    InterviewScheduled: 1,
-    RejectedByEmployer: 2,
-    RejectedByMe: 3,
-    OfferReceived: 4
-}
+import { ApplicationStatus } from "./JobApplicationStatus";
 
 function JobApplicationForm({ onCreate }) {
-    const today = dayjs();
+    const today = new Date().toISOString().slice(0, 10);
     const emptyForm = {
         jobTitle: "",
         companyName: "",
@@ -25,7 +16,7 @@ function JobApplicationForm({ onCreate }) {
     const [formData, setFormData] = useState(emptyForm);
 
     useEffect(() => {
-        const today = dayjs();
+        const today = new Date().toISOString().slice(0, 10);
         setFormData(prevData => ({ ...prevData, dateApplied: today }))
     }, []);
 
@@ -64,7 +55,6 @@ function JobApplicationForm({ onCreate }) {
                 <select
                     name="status"
                     defaultValue={ApplicationStatus.Pending}
-                    helperText="Job application status"
                     onChange={handleFormChange}
                 >
                     <option value={ApplicationStatus.Pending}>Pending</option>
@@ -77,7 +67,7 @@ function JobApplicationForm({ onCreate }) {
                     type="date"
                     name="dateApplied"
                     value={formData.dateApplied}
-                    onChange={(newValue) => { formData.dateApplied = newValue }}
+                    onChange={handleFormChange}
                 />
                 <input
                     type="number"

@@ -1,3 +1,5 @@
+import { getApplicationStatusText } from "./JobApplicationStatus";
+
 const term = "Job Application"
 
 function JobApplicationList({ data, onDelete }) {
@@ -13,23 +15,6 @@ function JobApplicationList({ data, onDelete }) {
             width: 260,
         },
     ];
-
-    function getApplicationStatusText(statusId) {
-        switch (statusId) {
-            case 0:
-                return 'Pending';
-            case 1:
-                return 'Interview Scheduled';
-            case 2:
-                return 'Rejected By Employer';
-            case 3:
-                return 'Rejected By Me';
-            case 4:
-                return 'Offer Received';
-            default:
-                return "Uknown Status";
-        }
-    };
 
     const formattedData = Array.isArray(data) ? data.map(job => ({
         ...job,
