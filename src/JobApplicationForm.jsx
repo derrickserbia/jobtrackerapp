@@ -1,21 +1,12 @@
-import { useState, useEffect, forwardRef } from "react";
-import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import { JobApplicationStatus } from "./JobApplicationStatus";
 
-
-export const ApplicationStatus = {
-    Pending: 0,
-    InterviewScheduled: 1,
-    RejectedByEmployer: 2,
-    RejectedByMe: 3,
-    OfferReceived: 4
-}
-
-function JobApplication({ onCreate }) {
-    const today = dayjs();
+function JobApplicationForm({ onCreate }) {
+    const today = new Date().toLocaleDateString("en-CA");
     const emptyForm = {
         jobTitle: "",
         companyName: "",
-        status: ApplicationStatus.Pending,
+        status: JobApplicationStatus.Pending,
         dateApplied: today,
         jobDescription: "",
         notes: "",
@@ -25,7 +16,7 @@ function JobApplication({ onCreate }) {
     const [formData, setFormData] = useState(emptyForm);
 
     useEffect(() => {
-        const today = dayjs();
+        const today = new Date().toLocaleDateString("en-CA");
         setFormData(prevData => ({ ...prevData, dateApplied: today }))
     }, []);
 
@@ -63,21 +54,20 @@ function JobApplication({ onCreate }) {
                 />
                 <select
                     name="status"
-                    defaultValue={ApplicationStatus.Pending}
-                    helperText="Job application status"
+                    defaultValue={JobApplicationStatus.Pending}
                     onChange={handleFormChange}
                 >
-                    <option value={ApplicationStatus.Pending}>Pending</option>
-                    <option value={ApplicationStatus.InterviewScheduled}>Interview Scheduled</option>
-                    <option value={ApplicationStatus.RejectedByEmployer}>Rejected by Employer</option>
-                    <option value={ApplicationStatus.RejectedByMe}>Rejected by Me</option>
-                    <option value={ApplicationStatus.OfferReceived}>Offer Received</option>
+                    <option value={JobApplicationStatus.Pending}>Pending</option>
+                    <option value={JobApplicationStatus.InterviewScheduled}>Interview Scheduled</option>
+                    <option value={JobApplicationStatus.RejectedByEmployer}>Rejected by Employer</option>
+                    <option value={JobApplicationStatus.RejectedByMe}>Rejected by Me</option>
+                    <option value={JobApplicationStatus.OfferReceived}>Offer Received</option>
                 </select>
                 <input
                     type="date"
                     name="dateApplied"
                     value={formData.dateApplied}
-                    onChange={(newValue) => { formData.dateApplied = newValue }}
+                    onChange={handleFormChange}
                 />
                 <input
                     type="number"
@@ -95,22 +85,18 @@ function JobApplication({ onCreate }) {
                     value={formData.maxSalary}
                     onChange={handleFormChange}
                 />
-                <div>
-                    <input
-                        name="jobDescription"
-                        placeholder="Enter job description"
-                        value={formData.jobDescription}
-                        onChange={handleFormChange}
-                    ></input>
-                </div>
-                <div>
-                    <input
-                        name="notes"
-                        placeholder="Enter your notes"
-                        value={formData.notes}
-                        onChange={handleFormChange}
-                    ></input>
-                </div>
+                <input
+                    name="jobDescription"
+                    placeholder="Enter job description"
+                    value={formData.jobDescription}
+                    onChange={handleFormChange}
+                />
+                <input
+                    name="notes"
+                    placeholder="Enter your notes"
+                    value={formData.notes}
+                    onChange={handleFormChange}
+                />
                 <button type="submit" onClick={() => onCreate(formData)}>Create</button>
                 <button type="button" onClick={handleCancel}>Cancel</button>
             </form>
@@ -118,4 +104,4 @@ function JobApplication({ onCreate }) {
     );
 };
 
-export default JobApplication;
+export default JobApplicationForm;
