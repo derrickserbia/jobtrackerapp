@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { JobApplicationStatus } from "./JobApplicationStatus";
 
 function JobApplicationForm({ onCreate }) {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = new Date().toLocaleDateString("en-CA");
     const emptyForm = {
         jobTitle: "",
         companyName: "",
@@ -16,7 +16,7 @@ function JobApplicationForm({ onCreate }) {
     const [formData, setFormData] = useState(emptyForm);
 
     useEffect(() => {
-        const today = new Date().toISOString().slice(0, 10);
+        const today = new Date().toLocaleDateString("en-CA");
         setFormData(prevData => ({ ...prevData, dateApplied: today }))
     }, []);
 
