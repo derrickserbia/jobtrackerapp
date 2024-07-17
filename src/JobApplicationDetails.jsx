@@ -24,8 +24,10 @@ function JobApplicationDetails({ onUpdate }) {
     const handleFormChange = (event) => {
         const { name, value } = event.target;
         var parsedValue = value;
-
-        if (name === "dateApplied ") {
+        
+        if (name === "minSalary" || name === "maxSalary") {
+            parsedValue = value.trim() === "" ? null : parseFloat(value);
+        } else if (name === "dateApplied ") {
             parsedValue = dayjs(value).format("YYYY-MM-DD");
         } else if (name === "status") {
             parsedValue = parseInt(value);
@@ -49,6 +51,10 @@ function JobApplicationDetails({ onUpdate }) {
             .finally(() => setIsLoading(false));
     }
 
+    const handleBackButton = () => {
+        navigate("/jobapplications")
+    }
+
     return (
         <div>
             {isLoading ? (
@@ -57,15 +63,15 @@ function JobApplicationDetails({ onUpdate }) {
                 <p>Error: {error}</p>
             ) : formData ? (
                 <div>
+                    <button type="button" onClick={handleBackButton}>Back to List</button>
                     <h2>Job Application Details</h2>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="jobTitle">Job title: </label>
                                 <input
-                                    id="jobTitle"
                                     name="jobTitle"
-                                    defaultValue={formData.jobTitle}
+                                    value={formData.jobTitle}
                                     onChange={handleFormChange}
                                 />
                             </div>
@@ -73,9 +79,8 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="companyName">Company name: </label>
                                 <input
-                                    id="companyName"
                                     name="companyName"
-                                    defaultValue={formData.companyName}
+                                    value={formData.companyName}
                                     onChange={handleFormChange}
                                 />
                             </div>
@@ -83,10 +88,9 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="dateApplied">Date applied: </label>
                                 <input
-                                    id="dateApplied"
                                     name="dateApplied"
                                     type="date"
-                                    defaultValue={dayjs(formData.dateApplied).format("YYYY-MM-DD")}
+                                    value={dayjs(formData.dateApplied).format("YYYY-MM-DD")}
                                     onChange={handleFormChange}
                                 />
                             </div>
@@ -94,9 +98,8 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="minSalary">Minimum salary: </label>
                                 <input
-                                    id="minSalary"
                                     name="minSalary"
-                                    defaultValue={formData.minSalary}
+                                    value={formData.minSalary}
                                     onChange={handleFormChange}
                                 />
                             </div>
@@ -104,9 +107,8 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="maxSalary">Maximum salary: </label>
                                 <input
-                                    id="maxSalary"
                                     name="maxSalary"
-                                    defaultValue={formData.maxSalary}
+                                    value={formData.maxSalary}
                                     onChange={handleFormChange}
                                 />
                             </div>
@@ -114,9 +116,8 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="status">Application status: </label>
                                 <select
-                                    id="status"
                                     name="status"
-                                    defaultValue={formData.status}
+                                    value={formData.status}
                                     onChange={handleFormChange}
                                 >
                                     <option value={JobApplicationStatus.Pending}>Pending</option>
@@ -130,9 +131,8 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="jobDescription">Job description: </label>
                                 <textarea
-                                    id="jobDescription"
                                     name="jobDescription"
-                                    defaultValue={formData.jobDescription}
+                                    value={formData.jobDescription}
                                     onChange={handleFormChange}
                                 />
                             </div>
@@ -140,9 +140,8 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="Notes">Notes: </label>
                                 <input
-                                    id="Notes"
                                     name="Notes"
-                                    defaultValue={formData.notes}
+                                    value={formData.notes}
                                     onChange={handleFormChange}
                                 />
                             </div>
