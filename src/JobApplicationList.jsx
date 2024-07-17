@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getApplicationStatusText } from "./JobApplicationStatus";
+import { Link } from "react-router-dom";
 
 const term = "Job Application"
 
@@ -47,7 +48,7 @@ function JobApplicationList({ data, onDelete }) {
                     {sortedData.map((job) => (
                         <tr key={job.id}>
                             <td>{job.id}</td>
-                            <td><a href={"/jobapplications/" + job.id}>{job.jobTitle}</a></td>
+                            <td><Link to={`/jobapplications/${job.id}`}>{job.jobTitle}</Link></td>
                             <td>{job.companyName}</td>
                             <td>{job.minSalary}</td>
                             <td>{job.maxSalary}</td>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import JobApplicationList from "./JobApplicationList";
 import JobApplicationForm from './JobApplicationForm';
+import JobApplicationDetails from './JobApplicationDetails';
 
 const API_URL = "/jobapplications";
 const headers = { 'Content-type': 'application/json' }
@@ -48,19 +50,27 @@ function App() {
     }
 
     return (
-        <div>
-            <JobApplicationForm onCreate={handleCreate} />
-            {isLoading ? (
-                <p>Loading job applications...</p>
-            ) : error ? (
-                <p>Error: {error}</p>
-            ) : (
-                <JobApplicationList
-                    data={jobApplicationData}
-                    onDelete={handleDelete}
-                />
-            )}
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={
+                        <div>
+                            <JobApplicationForm onCreate={handleCreate} />
+                            {isLoading ? (
+                                <p>Loading job applications...</p>
+                            ) : error ? (
+                                <p>Error: {error}</p>
+                            ) : (
+                                <JobApplicationList
+                                    data={jobApplicationData}
+                                    onDelete={handleDelete}
+                                />
+                            )}
+                        </div>
+                }/>
+                <Route path="/jobapplications/:id" element={<JobApplicationDetails />} />
+            </Routes>
+        </BrowserRouter>
+
     )
 };
 
