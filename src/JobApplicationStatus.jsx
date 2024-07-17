@@ -1,4 +1,4 @@
-export const ApplicationStatus = {
+export const JobApplicationStatus = {
     Pending: 0,
     InterviewScheduled: 1,
     RejectedByEmployer: 2,

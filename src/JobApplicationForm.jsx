@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { ApplicationStatus } from "./JobApplicationStatus";
+import { JobApplicationStatus } from "./JobApplicationStatus";
 
 function JobApplicationForm({ onCreate }) {
     const today = new Date().toISOString().slice(0, 10);
     const emptyForm = {
         jobTitle: "",
         companyName: "",
-        status: ApplicationStatus.Pending,
+        status: JobApplicationStatus.Pending,
         dateApplied: today,
         jobDescription: "",
         notes: "",
@@ -54,14 +54,14 @@ function JobApplicationForm({ onCreate }) {
                 />
                 <select
                     name="status"
-                    defaultValue={ApplicationStatus.Pending}
+                    defaultValue={JobApplicationStatus.Pending}
                     onChange={handleFormChange}
                 >
-                    <option value={ApplicationStatus.Pending}>Pending</option>
-                    <option value={ApplicationStatus.InterviewScheduled}>Interview Scheduled</option>
-                    <option value={ApplicationStatus.RejectedByEmployer}>Rejected by Employer</option>
-                    <option value={ApplicationStatus.RejectedByMe}>Rejected by Me</option>
-                    <option value={ApplicationStatus.OfferReceived}>Offer Received</option>
+                    <option value={JobApplicationStatus.Pending}>Pending</option>
+                    <option value={JobApplicationStatus.InterviewScheduled}>Interview Scheduled</option>
+                    <option value={JobApplicationStatus.RejectedByEmployer}>Rejected by Employer</option>
+                    <option value={JobApplicationStatus.RejectedByMe}>Rejected by Me</option>
+                    <option value={JobApplicationStatus.OfferReceived}>Offer Received</option>
                 </select>
                 <input
                     type="date"
