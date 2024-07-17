@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import JobApplicationList from "./JobApplicationList";
 import JobApplicationForm from './JobApplicationForm';
 import JobApplicationDetails from './JobApplicationDetails';
@@ -49,6 +49,14 @@ function App() {
             });
     }
 
+    const handleUpdate = (updatedItem) => {
+        setJobApplicationData(
+          jobApplicationData.map((job) =>
+            job.id === updatedItem.id ? updatedItem : job
+          )
+        );
+      };
+
     return (
         <BrowserRouter>
             <Routes>
@@ -67,7 +75,8 @@ function App() {
                             )}
                         </div>
                 }/>
-                <Route path="/jobapplications/:id" element={<JobApplicationDetails />} />
+                <Route path="/jobapplications/:id" element={<JobApplicationDetails onUpdate={handleUpdate}/>} />
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>
 

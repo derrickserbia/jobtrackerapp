@@ -85,18 +85,22 @@ function JobApplicationForm({ onCreate }) {
                     value={formData.maxSalary}
                     onChange={handleFormChange}
                 />
-                <input
-                    name="jobDescription"
-                    placeholder="Enter job description"
-                    value={formData.jobDescription}
-                    onChange={handleFormChange}
-                />
-                <input
-                    name="notes"
-                    placeholder="Enter your notes"
-                    value={formData.notes}
-                    onChange={handleFormChange}
-                />
+                <div>
+                    <textarea
+                        name="jobDescription"
+                        placeholder="Enter job description"
+                        value={formData.jobDescription}
+                        onChange={handleFormChange}
+                    />
+                </div>
+                <div>
+                    <textarea
+                        name="notes"
+                        placeholder="Enter your notes"
+                        value={formData.notes}
+                        onChange={handleFormChange}
+                    />
+                </div>
                 <button type="submit" onClick={() => onCreate(formData)}>Create</button>
                 <button type="button" onClick={handleCancel}>Cancel</button>
             </form>
