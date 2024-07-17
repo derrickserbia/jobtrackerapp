@@ -6,7 +6,9 @@ const term = "Job Application"
 
 function JobApplicationList({ data, onDelete }) {
     const [sortedData, setSortedData] = useState(data); // State for sorted data
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: null });  
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
+
+    const totalJobApplications = sortedData.length;
 
     useEffect(() => {
         const sorted = [...data].sort((a, b) => {
@@ -31,7 +33,7 @@ function JobApplicationList({ data, onDelete }) {
 
     return (
         <div>
-            <h2>{term}s</h2>
+            <h2>{term}s ({totalJobApplications})</h2>
             <table>
                 <thead>
                     <tr>
