@@ -49,6 +49,10 @@ function JobApplicationDetails({ onUpdate }) {
             .finally(() => setIsLoading(false));
     }
 
+    const handleBackButton = () => {
+        navigate("/jobapplications")
+    }
+
     return (
         <div>
             {isLoading ? (
@@ -57,6 +61,7 @@ function JobApplicationDetails({ onUpdate }) {
                 <p>Error: {error}</p>
             ) : formData ? (
                 <div>
+                    <button type="button" onClick={handleBackButton}>Back to List</button>
                     <h2>Job Application Details</h2>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <form onSubmit={handleSubmit}>
