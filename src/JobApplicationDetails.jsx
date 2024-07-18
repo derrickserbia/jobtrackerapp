@@ -42,7 +42,6 @@ function JobApplicationDetails({ onUpdate }) {
             headers,
             body: JSON.stringify(formData)
         })
-            // .then(response => response.json())
             .then(() => {
                 onUpdate(formData);
                 navigate("/jobapplications");
@@ -66,10 +65,11 @@ function JobApplicationDetails({ onUpdate }) {
                     <button type="button" onClick={handleBackButton}>Back to List</button>
                     <h2>Job Application Details</h2>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <form onSubmit={handleSubmit}>
+                        <form>
                             <div>
                                 <label htmlFor="jobTitle">Job title: </label>
                                 <input
+                                    type="text"
                                     name="jobTitle"
                                     value={formData.jobTitle}
                                     onChange={handleFormChange}
@@ -79,6 +79,7 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="companyName">Company name: </label>
                                 <input
+                                    type="text"
                                     name="companyName"
                                     value={formData.companyName}
                                     onChange={handleFormChange}
@@ -98,6 +99,7 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="minSalary">Minimum salary: </label>
                                 <input
+                                    type="number"
                                     name="minSalary"
                                     value={formData.minSalary}
                                     onChange={handleFormChange}
@@ -107,6 +109,7 @@ function JobApplicationDetails({ onUpdate }) {
                             <div>
                                 <label htmlFor="maxSalary">Maximum salary: </label>
                                 <input
+                                    type="number"
                                     name="maxSalary"
                                     value={formData.maxSalary}
                                     onChange={handleFormChange}
@@ -139,14 +142,14 @@ function JobApplicationDetails({ onUpdate }) {
                             <br />
                             <div>
                                 <label htmlFor="Notes">Notes: </label>
-                                <input
+                                <textarea
                                     name="Notes"
                                     value={formData.notes}
                                     onChange={handleFormChange}
                                 />
                             </div>
                             <br />
-                            <input type="submit" />
+                            <button type="submit" onClick={handleSubmit}>Save</button>
                         </form>
                     </div>
                 </div>

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { JobApplicationStatus } from "./JobApplicationStatus";
+import "./App.css"
+import { Link } from "react-router-dom";
 
 function JobApplicationForm({ onCreate }) {
     const today = new Date().toLocaleDateString("en-CA");
@@ -35,74 +37,101 @@ function JobApplicationForm({ onCreate }) {
     return (
         <>
             <h2>New Job Application</h2>
-            <form>
-                <input
-                    type="text"
-                    name="jobTitle"
-                    placeholder="Enter job title"
-                    value={formData.jobTitle}
-                    onChange={handleFormChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="companyName"
-                    placeholder="Enter company name"
-                    value={formData.companyName}
-                    onChange={handleFormChange}
-                    required
-                />
-                <select
-                    name="status"
-                    defaultValue={JobApplicationStatus.Pending}
-                    onChange={handleFormChange}
-                >
-                    <option value={JobApplicationStatus.Pending}>Pending</option>
-                    <option value={JobApplicationStatus.InterviewScheduled}>Interview Scheduled</option>
-                    <option value={JobApplicationStatus.RejectedByEmployer}>Rejected by Employer</option>
-                    <option value={JobApplicationStatus.RejectedByMe}>Rejected by Me</option>
-                    <option value={JobApplicationStatus.OfferReceived}>Offer Received</option>
-                </select>
-                <input
-                    type="date"
-                    name="dateApplied"
-                    value={formData.dateApplied}
-                    onChange={handleFormChange}
-                />
-                <input
-                    type="number"
-                    inputMode="number"
-                    placeholder="Enter minimum salary"
-                    name="minSalary"
-                    value={formData.minSalary}
-                    onChange={handleFormChange}
-                />
-                <input
-                    type="number"
-                    inputMode="number"
-                    placeholder="Enter maximum salary"
-                    name="maxSalary"
-                    value={formData.maxSalary}
-                    onChange={handleFormChange}
-                />
-                <div>
-                    <textarea
-                        name="jobDescription"
-                        placeholder="Enter job description"
-                        value={formData.jobDescription}
-                        onChange={handleFormChange}
-                    />
+            <form className="form-input" autoComplete="on">
+                <br />
+                <div className="form-fields">
+                    <div>
+                        <label htmlFor="jobTitle">Job title: </label>
+                        <input
+                            autoComplete="on"
+                            type="text"
+                            name="jobTitle"
+                            value={formData.jobTitle}
+                            onChange={handleFormChange}
+                            required
+                        />
+                    </div>
+                    <br />
+                    <div>
+                        <label htmlFor="companyName">Company name: </label>
+                        <input
+                            type="text"
+                            name="companyName"
+                            value={formData.companyName}
+                            onChange={handleFormChange}
+                            required
+                        />
+                    </div>
+                    <br />
+                    <div>
+                        <label htmlFor="status">Application status: </label>
+                        <select
+                            name="status"
+                            defaultValue={JobApplicationStatus.Pending}
+                            onChange={handleFormChange}
+                        >
+                            <option value={JobApplicationStatus.Pending}>Pending</option>
+                            <option value={JobApplicationStatus.InterviewScheduled}>Interview Scheduled</option>
+                            <option value={JobApplicationStatus.RejectedByEmployer}>Rejected by Employer</option>
+                            <option value={JobApplicationStatus.RejectedByMe}>Rejected by Me</option>
+                            <option value={JobApplicationStatus.OfferReceived}>Offer Received</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div>
+                        <label htmlFor="dateApplied">Date applied: </label>
+                        <input
+                            type="date"
+                            name="dateApplied"
+                            value={formData.dateApplied}
+                            onChange={handleFormChange}
+                        />
+                    </div>
+                    <br />
+                    <label htmlFor="minSalary">Salary range: </label>
+                    <div>
+                        <input
+                            type="number"
+                            inputMode="number"
+                            name="minSalary"
+                            value={formData.minSalary}
+                            onChange={handleFormChange}
+                        /> 
+                        <div style={{margin: "0px 4px", display: "inline-block"}}> - </div>
+                        <input
+                            type="number"
+                            inputMode="number"
+                            name="maxSalary"
+                            value={formData.maxSalary}
+                            onChange={handleFormChange}
+                        />
+                    </div>
+                    <br />
                 </div>
                 <div>
-                    <textarea
-                        name="notes"
-                        placeholder="Enter your notes"
-                        value={formData.notes}
-                        onChange={handleFormChange}
-                    />
+                    <div>
+                        <label htmlFor="jobDescription">Job description: </label>
+                        <textarea
+                            name="jobDescription"
+                            value={formData.jobDescription}
+                            onChange={handleFormChange}
+                        />
+                    </div>
+                    <br />
+                    <div>
+                        <label htmlFor="notes">Notes: </label>
+                        <textarea
+                            name="notes"
+                            value={formData.notes}
+                            onChange={handleFormChange}
+                        />
+                    </div>
+                    <br />
                 </div>
-                <button type="submit" onClick={() => onCreate(formData)}>Create</button>
-                <button type="button" onClick={handleCancel}>Cancel</button>
+                <div style={{ textAlign: "center" }}>
+                    <button className="button-submit" type="submit" onClick={() => onCreate(formData)}>Create</button>
+                    <button className="button-cancel" type="button" onClick={handleCancel}>Cancel</button>
+                </div>
             </form>
         </>
     );
