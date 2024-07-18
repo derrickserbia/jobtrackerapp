@@ -47,7 +47,7 @@ function App() {
                 console.error * ('Error deleting item:', error);
                 setError(error.message);
             });
-    }
+    };
 
     const handleUpdate = (updatedItem) => {
         setJobApplicationData(

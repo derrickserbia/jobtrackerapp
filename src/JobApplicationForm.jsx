@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { JobApplicationStatus } from "./JobApplicationStatus";
+import "./App.css"
 
 function JobApplicationForm({ onCreate }) {
     const today = new Date().toLocaleDateString("en-CA");
@@ -36,13 +37,12 @@ function JobApplicationForm({ onCreate }) {
         <>
             <h2>New Job Application</h2>
             <form>
-                <div style={{display: "flex", flexDirection: "column"}}>
+                <div className="form-input">
                     <div>
                         <label htmlFor="jobTitle">Job title: </label>
                         <input
                             type="text"
                             name="jobTitle"
-                            placeholder="Enter job title"
                             value={formData.jobTitle}
                             onChange={handleFormChange}
                             required
@@ -54,7 +54,6 @@ function JobApplicationForm({ onCreate }) {
                         <input
                             type="text"
                             name="companyName"
-                            placeholder="Enter company name"
                             value={formData.companyName}
                             onChange={handleFormChange}
                             required
@@ -86,24 +85,18 @@ function JobApplicationForm({ onCreate }) {
                         />
                     </div>
                     <br />
-                    <div>
-                        <label htmlFor="minSalary">Minimum salary: </label>
+                    <label htmlFor="minSalary">Salary range: </label>
+                    <div style={{width: "100%"}}>
                         <input
                             type="number"
                             inputMode="number"
-                            placeholder="Enter minimum salary"
                             name="minSalary"
                             value={formData.minSalary}
                             onChange={handleFormChange}
-                        />
-                    </div>
-                    <br />
-                    <div>
-                        <label htmlFor="maxSalary">Maximum salary: </label>
+                        /> -
                         <input
                             type="number"
                             inputMode="number"
-                            placeholder="Enter maximum salary"
                             name="maxSalary"
                             value={formData.maxSalary}
                             onChange={handleFormChange}
@@ -114,7 +107,6 @@ function JobApplicationForm({ onCreate }) {
                         <label htmlFor="jobDescription">Job description: </label>
                         <textarea
                             name="jobDescription"
-                            placeholder="Enter job description"
                             value={formData.jobDescription}
                             onChange={handleFormChange}
                         />
@@ -124,16 +116,15 @@ function JobApplicationForm({ onCreate }) {
                         <label htmlFor="notes">Notes: </label>
                         <textarea
                             name="notes"
-                            placeholder="Enter your notes"
                             value={formData.notes}
                             onChange={handleFormChange}
                         />
                     </div>
                     <br />
                 </div>
-                <div style={{display:"flex", flexDirection: "row", alignItems: "flex-start"}} >
-                    <button type="submit" onClick={() => onCreate(formData)}>Create</button>
-                    <button type="button" onClick={handleCancel}>Cancel</button>
+                <div style={{textAlign: "center"}}>
+                    <button className="button-submit" type="submit" onClick={() => onCreate(formData)}>Create</button>
+                    <button className="button-cancel" type="button" onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
         </>
