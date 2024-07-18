@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { JobApplicationStatus } from "./JobApplicationStatus";
 import "./App.css"
+import { Link } from "react-router-dom";
 
 function JobApplicationForm({ onCreate }) {
     const today = new Date().toLocaleDateString("en-CA");
@@ -36,11 +37,13 @@ function JobApplicationForm({ onCreate }) {
     return (
         <>
             <h2>New Job Application</h2>
-            <form>
-                <div className="form-input">
+            <form className="form-input" autoComplete="on">
+                <br />
+                <div className="form-fields">
                     <div>
                         <label htmlFor="jobTitle">Job title: </label>
                         <input
+                            autoComplete="on"
                             type="text"
                             name="jobTitle"
                             value={formData.jobTitle}
@@ -86,14 +89,15 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <label htmlFor="minSalary">Salary range: </label>
-                    <div style={{width: "100%"}}>
+                    <div>
                         <input
                             type="number"
                             inputMode="number"
                             name="minSalary"
                             value={formData.minSalary}
                             onChange={handleFormChange}
-                        /> -
+                        /> 
+                        <div style={{margin: "0px 4px", display: "inline-block"}}> - </div>
                         <input
                             type="number"
                             inputMode="number"
@@ -103,6 +107,8 @@ function JobApplicationForm({ onCreate }) {
                         />
                     </div>
                     <br />
+                </div>
+                <div>
                     <div>
                         <label htmlFor="jobDescription">Job description: </label>
                         <textarea
@@ -122,7 +128,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                 </div>
-                <div style={{textAlign: "center"}}>
+                <div style={{ textAlign: "center" }}>
                     <button className="button-submit" type="submit" onClick={() => onCreate(formData)}>Create</button>
                     <button className="button-cancel" type="button" onClick={handleCancel}>Cancel</button>
                 </div>

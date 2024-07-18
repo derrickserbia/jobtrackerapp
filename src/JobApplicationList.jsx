@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getApplicationStatusText } from "./JobApplicationStatus";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const term = "Job Application"
 
 function JobApplicationList({ data, onDelete }) {
+    const navigate = useNavigate();
     const [sortedData, setSortedData] = useState(data); // State for sorted data
     const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
@@ -31,18 +32,26 @@ function JobApplicationList({ data, onDelete }) {
         setSortConfig({ key, direction });
     };
 
+    const handleBackButton = () => {
+        navigate("/")
+    }
+
+    const formatter = new Intl.NumberFormat("en-US", {
+        style: "currency", currency: "USD"});
+
     return (
         <div>
+            <button type="button" onClick={handleBackButton}>Back to Home</button>
             <h2>{term}s ({totalJobApplications})</h2>
             <table>
                 <thead>
                     <tr>
-                        <th style={{cursor:'pointer'}} onClick={() => requestSort('id')}>Job ID</th>
-                        <th style={{cursor:'pointer'}} onClick={() => requestSort('jobTitle')}>Job Title</th>
-                        <th style={{cursor:'pointer'}} onClick={() => requestSort('companyName')}>Company Name</th>
-                        <th style={{cursor:'pointer'}} onClick={() => requestSort('minSalary')}>Minimum Salary</th>
-                        <th style={{cursor:'pointer'}} onClick={() => requestSort('maxSalary')}>Maximum Salary</th>
-                        <th style={{cursor:'pointer'}} onClick={() => requestSort('status')}>Application Status</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => requestSort('id')}>Job ID</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => requestSort('jobTitle')}>Job Title</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => requestSort('companyName')}>Company Name</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => requestSort('minSalary')}>Minimum Salary</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => requestSort('maxSalary')}>Maximum Salary</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => requestSort('status')}>Application Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -52,12 +61,10 @@ function JobApplicationList({ data, onDelete }) {
                             <td>{job.id}</td>
                             <td><Link to={`/jobapplications/${job.id}`}>{job.jobTitle}</Link></td>
                             <td>{job.companyName}</td>
-                            <td>{job.minSalary}</td>
-                            <td>{job.maxSalary}</td>
+                            <td>{formatter.format(job.minSalary)}</td>
+                            <td>{formatter.format(job.maxSalary)}</td>
                             <td>{getApplicationStatusText(job.status)}</td>
-                            <td>
-                                <button type="button" onClick={() => onDelete(job.id)}>Delete</button>
-                            </td>
+                            <td><button type="button" onClick={() => onDelete(job.id)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>

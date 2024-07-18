@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import JobApplicationList from "./JobApplicationList";
 import JobApplicationForm from './JobApplicationForm';
 import JobApplicationDetails from './JobApplicationDetails';
@@ -9,8 +9,6 @@ const headers = { 'Content-type': 'application/json' }
 
 function App() {
     const [jobApplicationData, setJobApplicationData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchJobApplicationData = () => {
@@ -18,7 +16,6 @@ function App() {
                 .then(response => response.json())
                 .then(data => setJobApplicationData(data))
                 .catch(error => setError(error))
-                .finally(setIsLoading(false));
         };
 
         fetchJobApplicationData();
@@ -51,31 +48,23 @@ function App() {
 
     const handleUpdate = (updatedItem) => {
         setJobApplicationData(
-          jobApplicationData.map((job) =>
-            job.id === updatedItem.id ? updatedItem : job
-          )
+            jobApplicationData.map((job) =>
+                job.id === updatedItem.id ? updatedItem : job
+            )
         );
-      };
+    };
 
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={
-                        <div>
-                            <JobApplicationForm onCreate={handleCreate} />
-                            {isLoading ? (
-                                <p>Loading job applications...</p>
-                            ) : error ? (
-                                <p>Error: {error}</p>
-                            ) : (
-                                <JobApplicationList
-                                    data={jobApplicationData}
-                                    onDelete={handleDelete}
-                                />
-                            )}
-                        </div>
-                }/>
-                <Route path="/jobapplications/:id" element={<JobApplicationDetails onUpdate={handleUpdate}/>} />
+                    <div>
+                        <Link to="/jobapplications">Job application list ({jobApplicationData.length})</Link>
+                        <JobApplicationForm onCreate={handleCreate} />
+                    </div>
+                } />
+                <Route path="/jobapplications" element={<JobApplicationList data={jobApplicationData} onDelete={handleDelete} />} />
+                <Route path="/jobapplications/:id" element={<JobApplicationDetails onUpdate={handleUpdate} />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>
