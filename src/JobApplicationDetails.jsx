@@ -132,6 +132,36 @@ function JobApplicationDetails({ onUpdate }) {
                             </div>
                             <br />
                             <div>
+                                <label htmlFor="postingUrl">Posting URL: </label>
+                                <input
+                                    type="text"
+                                    name="postingUrl"
+                                    value={formData.postingUrl}
+                                    onChange={handleFormChange}
+                                />
+                            </div>
+                            <br />
+                            <div>
+                                <label htmlFor="hiringTeam">Hiring team: </label>
+                                <input
+                                    type="text"
+                                    name="hiringTeam"
+                                    value={formData.hiringTeam}
+                                    onChange={handleFormChange}
+                                />
+                            </div>
+                            <br />
+                            <div>
+                                <label htmlFor="techStack">Tech stack: </label>
+                                <input
+                                    type="text"
+                                    name="techStack"
+                                    value={formData.techStack}
+                                    onChange={handleFormChange}
+                                />
+                            </div>
+                            <br />
+                            <div>
                                 <label htmlFor="jobDescription">Job description: </label>
                                 <textarea
                                     name="jobDescription"

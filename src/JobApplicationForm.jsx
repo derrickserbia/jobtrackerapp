@@ -40,8 +40,18 @@ function JobApplicationForm({ onCreate }) {
             <form className="form-input" autoComplete="on">
                 <br />
                 <div className="form-fields">
+                <div>
+                        <label htmlFor="postingUrl">Posting URL:</label>
+                        <input
+                            type="text"
+                            name="postingUrl"
+                            value={formData.postingUrl}
+                            onChange={handleFormChange}
+                            required
+                        />
+                    </div>
                     <div>
-                        <label htmlFor="jobTitle">Job title: </label>
+                        <label htmlFor="jobTitle">Job title:</label>
                         <input
                             autoComplete="on"
                             type="text"
@@ -53,7 +63,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="companyName">Company name: </label>
+                        <label htmlFor="companyName">Company name:</label>
                         <input
                             type="text"
                             name="companyName"
@@ -64,7 +74,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="status">Application status: </label>
+                        <label htmlFor="status">Application status:</label>
                         <select
                             name="status"
                             defaultValue={JobApplicationStatus.Pending}
@@ -79,7 +89,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="dateApplied">Date applied: </label>
+                        <label htmlFor="dateApplied">Date applied:</label>
                         <input
                             type="date"
                             name="dateApplied"
@@ -88,7 +98,7 @@ function JobApplicationForm({ onCreate }) {
                         />
                     </div>
                     <br />
-                    <label htmlFor="minSalary">Salary range: </label>
+                    <label htmlFor="minSalary">Salary range:</label>
                     <div>
                         <input
                             type="number"
@@ -106,11 +116,33 @@ function JobApplicationForm({ onCreate }) {
                             onChange={handleFormChange}
                         />
                     </div>
+                    <div>
+                        <label htmlFor="hiringTeam">Hiring team:</label>
+                        <input
+                            autoComplete="on"
+                            type="text"
+                            name="hiringTeam"
+                            value={formData.hiringTeam}
+                            onChange={handleFormChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="techStack">Tech stack:</label>
+                        <input
+                            autoComplete="on"
+                            type="text"
+                            name="techStack"
+                            value={formData.techStack}
+                            onChange={handleFormChange}
+                            required
+                        />
+                    </div>
                     <br />
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="jobDescription">Job description: </label>
+                        <label htmlFor="jobDescription">Job description:</label>
                         <textarea
                             name="jobDescription"
                             value={formData.jobDescription}
@@ -119,7 +151,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="notes">Notes: </label>
+                        <label htmlFor="notes">Notes:</label>
                         <textarea
                             name="notes"
                             value={formData.notes}
