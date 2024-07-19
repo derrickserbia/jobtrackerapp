@@ -3,6 +3,8 @@ import { JobApplicationStatus } from "./JobApplicationStatus";
 import "./App.css"
 import { Link } from "react-router-dom";
 
+const API_URL = "/jobapplications";
+
 function JobApplicationForm({ onCreate }) {
     const today = new Date().toLocaleDateString("en-CA");
     const emptyForm = {
@@ -14,8 +16,12 @@ function JobApplicationForm({ onCreate }) {
         notes: "",
         minSalary: 0,
         maxSalary: 0,
+        postingUrl: "",
+        hiringTeam: "",
+        techStack: ""
     };
     const [formData, setFormData] = useState(emptyForm);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const today = new Date().toLocaleDateString("en-CA");
@@ -25,6 +31,20 @@ function JobApplicationForm({ onCreate }) {
     const handleFormChange = (event) => {
         const { name, value } = event.target;
         setFormData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handlePostingUrlChange = (event) => {
+        const { name, value } = event.target;
+            
+        fetch(`${API_URL}/extract?postingUrl=${value}`)
+            .then(response => response.json())
+            .then(data => console.log(`from api: ${data}`)) //TODO: replace with setFormData(data)
+            .catch(error => setError(error))
+        
+            setFormData(prevData => ({
             ...prevData,
             [name]: value,
         }));
@@ -46,7 +66,7 @@ function JobApplicationForm({ onCreate }) {
                             type="text"
                             name="postingUrl"
                             value={formData.postingUrl}
-                            onChange={handleFormChange}
+                            onChange={handlePostingUrlChange}
                             required
                         />
                     </div>
