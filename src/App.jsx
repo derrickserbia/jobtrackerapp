@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
-import JobApplicationList from "./JobApplicationList";
-import JobApplicationForm from './JobApplicationForm';
-import JobApplicationDetails from './JobApplicationDetails';
+import JobApplicationList from "./Components/JobApplicationList/JobApplicationList";
+import JobApplicationForm from './Components/JobApplicationForm/JobApplicationForm';
+import JobApplicationDetails from './Components/JobApplicationDetails/JobApplicationDetails';
+import './App.css'
 
 const API_URL = "/jobapplications";
 const headers = { 'Content-type': 'application/json' }

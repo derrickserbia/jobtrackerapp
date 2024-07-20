@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { JobApplicationStatus } from './JobApplicationStatus';
+import { JobApplicationStatus } from '../../Utils/JobApplicationStatus.jsx';
 
 const API_URL = "/jobapplications";
 const headers = { "Content-Type": "application/json" };
@@ -131,6 +131,36 @@ function JobApplicationDetails({ onUpdate }) {
                                 </select>
                             </div>
                             <br />
+                            <div>
+                                <label htmlFor="postingUrl">Posting URL: </label>
+                                <input
+                                    type="text"
+                                    name="postingUrl"
+                                    value={formData.postingUrl}
+                                    onChange={handleFormChange}
+                                />
+                            </div>
+                            <br />
+                            <div>
+                                <label htmlFor="hiringTeam">Hiring team: </label>
+                                <input
+                                    type="text"
+                                    name="hiringTeam"
+                                    value={formData.hiringTeam}
+                                    onChange={handleFormChange}
+                                />
+                            </div>
+                            <br />
+                            {/* <div>
+                                <label htmlFor="techStack">Tech stack: </label>
+                                <input
+                                    type="text"
+                                    name="techStack"
+                                    value={formData.techStack}
+                                    onChange={handleFormChange}
+                                />
+                            </div>
+                            <br /> */}
                             <div>
                                 <label htmlFor="jobDescription">Job description: </label>
                                 <textarea

@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { JobApplicationStatus } from "./JobApplicationStatus";
-import "./App.css"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { JobApplicationStatus } from "../../Utils/JobApplicationStatus";
+
+const API_URL = "/jobapplications";
+const headers = { 'Content-type': 'application/json' }
 
 function JobApplicationForm({ onCreate }) {
+    const navigate = useNavigate();
     const today = new Date().toLocaleDateString("en-CA");
     const emptyForm = {
         jobTitle: "",
@@ -14,8 +17,12 @@ function JobApplicationForm({ onCreate }) {
         notes: "",
         minSalary: 0,
         maxSalary: 0,
+        postingUrl: "",
+        hiringTeam: "",
+        techStack: []
     };
     const [formData, setFormData] = useState(emptyForm);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const today = new Date().toLocaleDateString("en-CA");
@@ -30,18 +37,63 @@ function JobApplicationForm({ onCreate }) {
         }));
     };
 
+    const handleSubmit = (newItem) => {
+        console.log(`newItem: ${JSON.stringify(newItem)}`)
+
+        newItem.minSalary = newItem.minSalary.trim === "" ? null : parseFloat(newItem.minSalary);
+        newItem.maxSalary = newItem.maxSalary.trim === "" ? null : parseFloat(newItem.maxSalary);
+
+        fetch(API_URL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(newItem)
+        })
+            .then(response => response.json())
+            .then(returnedItem => {
+                onCreate(returnedItem)
+                navigate("/", {replace: true});
+                setFormData(emptyForm)
+            })
+            .catch(error => setError(error))
+    };
+
+    const handlePostingUrlChange = (event) => {
+        const { name, value } = event.target;
+            
+        fetch(`${API_URL}/extract?postingUrl=${value}`)
+            .then(response => response.json())
+            .then(data => console.log(`from api: ${data}`)) //TODO: replace with setFormData(data)
+            .catch(error => setError(error))
+        
+            setFormData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
     const handleCancel = () => {
         setFormData(emptyForm);
     };
 
     return (
-        <>
+        <div>
             <h2>New Job Application</h2>
-            <form className="form-input" autoComplete="on">
+            <form>
                 <br />
-                <div className="form-fields">
+                <div>
+                <div>
+                        <label htmlFor="postingUrl">Posting URL:</label>
+                        <input
+                            type="text"
+                            name="postingUrl"
+                            value={formData.postingUrl}
+                            onChange={handlePostingUrlChange}
+                            required
+                        />
+                    </div>
+                    <br />
                     <div>
-                        <label htmlFor="jobTitle">Job title: </label>
+                        <label htmlFor="jobTitle">Job title:</label>
                         <input
                             autoComplete="on"
                             type="text"
@@ -53,7 +105,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="companyName">Company name: </label>
+                        <label htmlFor="companyName">Company name:</label>
                         <input
                             type="text"
                             name="companyName"
@@ -64,7 +116,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="status">Application status: </label>
+                        <label htmlFor="status">Application status:</label>
                         <select
                             name="status"
                             defaultValue={JobApplicationStatus.Pending}
@@ -79,7 +131,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="dateApplied">Date applied: </label>
+                        <label htmlFor="dateApplied">Date applied:</label>
                         <input
                             type="date"
                             name="dateApplied"
@@ -88,7 +140,7 @@ function JobApplicationForm({ onCreate }) {
                         />
                     </div>
                     <br />
-                    <label htmlFor="minSalary">Salary range: </label>
+                    <label htmlFor="minSalary">Salary range:</label>
                     <div>
                         <input
                             type="number"
@@ -97,7 +149,7 @@ function JobApplicationForm({ onCreate }) {
                             value={formData.minSalary}
                             onChange={handleFormChange}
                         /> 
-                        <div style={{margin: "0px 4px", display: "inline-block"}}> - </div>
+                        <div> - </div>
                         <input
                             type="number"
                             inputMode="number"
@@ -107,10 +159,32 @@ function JobApplicationForm({ onCreate }) {
                         />
                     </div>
                     <br />
+                    <div>
+                        <label htmlFor="hiringTeam">Hiring team:</label>
+                        <input
+                            autoComplete="on"
+                            type="text"
+                            name="hiringTeam"
+                            value={formData.hiringTeam}
+                            onChange={handleFormChange}
+                        />
+                    </div>
+                    <br />
+                    {/* <div>
+                        <label htmlFor="techStack">Tech stack:</label>
+                        <input
+                            autoComplete="on"
+                            type="text"
+                            name="techStack"
+                            value={formData.techStack}
+                            onChange={handleFormChange}
+                        />
+                    </div>
+                    <br /> */}
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="jobDescription">Job description: </label>
+                        <label htmlFor="jobDescription">Job description:</label>
                         <textarea
                             name="jobDescription"
                             value={formData.jobDescription}
@@ -119,7 +193,7 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                     <div>
-                        <label htmlFor="notes">Notes: </label>
+                        <label htmlFor="notes">Notes:</label>
                         <textarea
                             name="notes"
                             value={formData.notes}
@@ -128,12 +202,12 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                 </div>
-                <div style={{ textAlign: "center" }}>
-                    <button className="button-submit" type="submit" onClick={() => onCreate(formData)}>Create</button>
+                <div>
+                    <button className="button-submit" type="submit" onClick={() => handleSubmit(formData)}>Create</button>
                     <button className="button-cancel" type="button" onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
-        </>
+        </div>
     );
 };
 
