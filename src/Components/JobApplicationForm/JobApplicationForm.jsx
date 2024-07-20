@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { JobApplicationStatus } from "./JobApplicationStatus";
-import "./App.css"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { JobApplicationStatus } from "../../Utils/JobApplicationStatus";
 
 const API_URL = "/jobapplications";
+const headers = { 'Content-type': 'application/json' }
 
 function JobApplicationForm({ onCreate }) {
+    const navigate = useNavigate();
     const today = new Date().toLocaleDateString("en-CA");
     const emptyForm = {
         jobTitle: "",
@@ -18,7 +19,7 @@ function JobApplicationForm({ onCreate }) {
         maxSalary: 0,
         postingUrl: "",
         hiringTeam: "",
-        techStack: ""
+        techStack: []
     };
     const [formData, setFormData] = useState(emptyForm);
     const [error, setError] = useState(null);
@@ -34,6 +35,26 @@ function JobApplicationForm({ onCreate }) {
             ...prevData,
             [name]: value,
         }));
+    };
+
+    const handleSubmit = (newItem) => {
+        console.log(`newItem: ${JSON.stringify(newItem)}`)
+
+        newItem.minSalary = newItem.minSalary.trim === "" ? null : parseFloat(newItem.minSalary);
+        newItem.maxSalary = newItem.maxSalary.trim === "" ? null : parseFloat(newItem.maxSalary);
+
+        fetch(API_URL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(newItem)
+        })
+            .then(response => response.json())
+            .then(returnedItem => {
+                onCreate(returnedItem)
+                navigate("/", {replace: true});
+                setFormData(emptyForm)
+            })
+            .catch(error => setError(error))
     };
 
     const handlePostingUrlChange = (event) => {
@@ -55,11 +76,11 @@ function JobApplicationForm({ onCreate }) {
     };
 
     return (
-        <>
+        <div>
             <h2>New Job Application</h2>
-            <form className="form-input" autoComplete="on">
+            <form>
                 <br />
-                <div className="form-fields">
+                <div>
                 <div>
                         <label htmlFor="postingUrl">Posting URL:</label>
                         <input
@@ -70,6 +91,7 @@ function JobApplicationForm({ onCreate }) {
                             required
                         />
                     </div>
+                    <br />
                     <div>
                         <label htmlFor="jobTitle">Job title:</label>
                         <input
@@ -127,7 +149,7 @@ function JobApplicationForm({ onCreate }) {
                             value={formData.minSalary}
                             onChange={handleFormChange}
                         /> 
-                        <div style={{margin: "0px 4px", display: "inline-block"}}> - </div>
+                        <div> - </div>
                         <input
                             type="number"
                             inputMode="number"
@@ -136,6 +158,7 @@ function JobApplicationForm({ onCreate }) {
                             onChange={handleFormChange}
                         />
                     </div>
+                    <br />
                     <div>
                         <label htmlFor="hiringTeam">Hiring team:</label>
                         <input
@@ -144,10 +167,10 @@ function JobApplicationForm({ onCreate }) {
                             name="hiringTeam"
                             value={formData.hiringTeam}
                             onChange={handleFormChange}
-                            required
                         />
                     </div>
-                    <div>
+                    <br />
+                    {/* <div>
                         <label htmlFor="techStack">Tech stack:</label>
                         <input
                             autoComplete="on"
@@ -155,10 +178,9 @@ function JobApplicationForm({ onCreate }) {
                             name="techStack"
                             value={formData.techStack}
                             onChange={handleFormChange}
-                            required
                         />
                     </div>
-                    <br />
+                    <br /> */}
                 </div>
                 <div>
                     <div>
@@ -180,12 +202,12 @@ function JobApplicationForm({ onCreate }) {
                     </div>
                     <br />
                 </div>
-                <div style={{ textAlign: "center" }}>
-                    <button className="button-submit" type="submit" onClick={() => onCreate(formData)}>Create</button>
+                <div>
+                    <button className="button-submit" type="submit" onClick={() => handleSubmit(formData)}>Create</button>
                     <button className="button-cancel" type="button" onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
-        </>
+        </div>
     );
 };
 

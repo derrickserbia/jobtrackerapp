@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getApplicationStatusText } from "./JobApplicationStatus";
+import { getApplicationStatusText } from "../../Utils/JobApplicationStatus.jsx";
 import { Link, useNavigate } from "react-router-dom";
 
 const term = "Job Application"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { JobApplicationStatus } from './JobApplicationStatus';
+import { JobApplicationStatus } from '../../Utils/JobApplicationStatus.jsx';
 
 const API_URL = "/jobapplications";
 const headers = { "Content-Type": "application/json" };
@@ -151,7 +151,7 @@ function JobApplicationDetails({ onUpdate }) {
                                 />
                             </div>
                             <br />
-                            <div>
+                            {/* <div>
                                 <label htmlFor="techStack">Tech stack: </label>
                                 <input
                                     type="text"
@@ -160,7 +160,7 @@ function JobApplicationDetails({ onUpdate }) {
                                     onChange={handleFormChange}
                                 />
                             </div>
-                            <br />
+                            <br /> */}
                             <div>
                                 <label htmlFor="jobDescription">Job description: </label>
                                 <textarea
