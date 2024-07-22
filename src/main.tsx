@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import App, { API_URL } from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page.tsx";
 import JobApplicationDetails from "./components/JobApplicationDetails.tsx";
@@ -13,8 +13,12 @@ const router = createBrowserRouter([
     children: [],
   },
   {
-    path: "jobapplications/:id",
+    path: "jobapplications/:jobApplicationId",
     element: <JobApplicationDetails />,
+    loader: async ({ params }) => {
+      console.log(params);
+      return fetch(`${API_URL}/${params.jobApplicationId}`);
+    },
   },
 ]);
 

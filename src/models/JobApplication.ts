@@ -16,7 +16,7 @@ export interface JobApplication {
 }
 
 export const emptyJobApplication: JobApplication = {
-  id: 0, // Or let your backend assign the ID
+  id: 0,
   jobTitle: "",
   companyName: "",
   status: ApplicationStatus.Pending,
