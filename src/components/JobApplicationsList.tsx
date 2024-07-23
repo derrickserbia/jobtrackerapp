@@ -4,6 +4,7 @@ import { Table, Button, Pagination } from "react-bootstrap";
 import { getApplicationStatusText } from "../models/ApplicationStatus";
 import { Link } from "react-router-dom";
 import { API_URL } from "../App";
+import { BsTrashFill } from "react-icons/bs";
 
 function JobApplicationsList() {
   const [jobApplicationsData, setJobApplicationsData] = useState<
@@ -20,7 +21,6 @@ function JobApplicationsList() {
         .then((data) => {
           setJobApplicationsData(data);
           setIsLoading(false);
-          console.log(data);
         })
         .catch((error) => {
           setError(error);
@@ -85,13 +85,13 @@ function JobApplicationsList() {
                   </td>
                   <td>{salaryFormatter(jobApplication.minSalary)}</td>
                   <td>{salaryFormatter(jobApplication.maxSalary)}</td>
-                  <td>
+                  <td className="align-middle">
                     <Button
                       variant="outline-danger"
                       size="sm"
                       onClick={() => handleDelete(jobApplication.id)}
                     >
-                      Delete
+                      <BsTrashFill />
                     </Button>
                   </td>
                 </tr>

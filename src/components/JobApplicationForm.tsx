@@ -10,7 +10,7 @@ const headers = {
 };
 
 function JobApplicationForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyJobApplication);
 
   const handleOnChange = (
@@ -54,7 +54,7 @@ function JobApplicationForm() {
     })
       .then((response) => response.json())
       .then((returnedItem) => {
-        navigate("/", { replace: true });
+        // navigate("/", { replace: true });
         console.log(returnedItem);
         setFormData(emptyJobApplication);
       });

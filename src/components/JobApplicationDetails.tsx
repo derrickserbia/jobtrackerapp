@@ -9,23 +9,23 @@ const headers = {
   "Content-type": "application/json",
 };
 
-function JobApplicationDetails() {
-  const { jobApplicationId } = useParams();
+function JobApplicationDetails(jobApplicationData: JobApplication) {
   const [formIsEdited, setFormIsEdited] = useState(false);
-  const [jobApplicationData, setJobApplicationData] =
-    useState(emptyJobApplication);
+  // const [jobApplicationData, setJobApplicationData] =
+  //   useState(emptyJobApplication);
   const [initialJobApplicationData, setInitialJobApplicationData] =
     useState(emptyJobApplication);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${API_URL}/${jobApplicationId}`)
-      .then((response) => response.json())
-      .then((data: JobApplication) => {
-        setJobApplicationData(data);
-        setInitialJobApplicationData(data);
-        console.log(data);
-      });
+    console.log(jobApplicationData);
+    //   fetch(`${API_URL}/${jobApplicationId}`)
+    //     .then((response) => response.json())
+    //     .then((data: JobApplication) => {
+    //       setJobApplicationData(data);
+    //       setInitialJobApplicationData(data);
+    //       setIsLoading(false);
+    //     });
   }, []);
 
   const handleSubmit = (event: FormEvent) => {
@@ -78,7 +78,7 @@ function JobApplicationDetails() {
   };
 
   return (
-    <Container>
+    <>
       <h3>Job Application Details</h3>
       <Form onSubmit={handleSubmit}>
         <Row>
@@ -211,7 +211,7 @@ function JobApplicationDetails() {
           )}
         </Form.Group>
       </Form>
-    </Container>
+    </>
   );
 }
 export default JobApplicationDetails;
