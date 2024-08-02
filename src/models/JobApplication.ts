@@ -1,3 +1,4 @@
+import { LoaderFunction } from "react-router-dom";
 import { ApplicationStatus } from "./ApplicationStatus";
 
 export interface JobApplication {
@@ -29,3 +30,5 @@ export const emptyJobApplication: JobApplication = {
   hiringTeam: "",
   techStack: [],
 };
+
+export type JobApplicationLoader = LoaderFunction<JobApplication>;
