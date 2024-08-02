@@ -34,7 +34,7 @@ function JobApplicationDetailsPage() {
           {jobApplication.companyName} - {jobApplication.hiringTeam}
         </Card.Subtitle>
         <br></br>
-        <Card.Text>
+        <Card.Text as="div">
           {/* Conditionally render paragraphs based on showMoreJobDescription */}
           {showMoreJobDescription
             ? jobApplication?.jobDescription
@@ -64,6 +64,7 @@ function JobApplicationDetailsPage() {
           <Card.Link href={jobApplication.postingUrl}>Posting URL</Card.Link>
         )}
       </Card.Body>
+      <Button href={`/edit-jobapplication/${jobApplication.id}`}>Edit</Button>
     </Card>
   );
 }

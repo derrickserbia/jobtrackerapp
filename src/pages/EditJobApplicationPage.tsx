@@ -1,65 +1,25 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { API_URL } from "../App";
-import { emptyJobApplication, JobApplication } from "../models/JobApplication";
-import dayjs, { Dayjs } from "dayjs";
+import { JobApplication } from "../models/JobApplication";
+import { useNavigate, useLoaderData } from "react-router-dom";
 
-const headers = {
-  "Content-type": "application/json",
-};
+function EditJobApplicationPage() {
+  const navigate = useNavigate();
+  const formData: JobApplication = useLoaderData() as JobApplication;
 
-function JobApplicationForm() {
-  // const navigate = useNavigate();
-  const [formData, setFormData] = useState(emptyJobApplication);
-
-  const handleOnChange = (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = event.target;
-
-    let newValue: string | number | Dayjs | null = value;
-    switch (name) {
-      case "minSalary":
-      case "maxSalary":
-        newValue = value.trim() === "" ? null : parseFloat(value);
-        break;
-      case "dateApplied":
-        newValue = dayjs(value);
-        break;
-      case "status":
-        newValue = parseInt(value, 10);
-        break;
-      default:
-        break;
-    }
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: newValue,
-    }));
-  };
+  useEffect(() => {
+    console.log("EditPage");
+  }, []);
 
   const handleSubmit = (
-    newJobApplication: JobApplication,
-    event: React.FormEvent
+    form: JobApplication,
+    event: React.FormEvent<HTMLFormElement>
   ) => {
-    event.preventDefault();
-
-    fetch(API_URL, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(newJobApplication),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        setFormData(emptyJobApplication);
-      });
+    console.log(form, event);
   };
-
-  const handleClear = () => {
-    setFormData(emptyJobApplication);
+  const handleOnChange = () => {};
+  const handleBack = () => {
+    navigate(`/jobapplications/${formData.id}`);
   };
 
   return (
@@ -84,7 +44,7 @@ function JobApplicationForm() {
               <Form.Label>Date applied</Form.Label>
               <Form.Control
                 type="date"
-                value={formData.dateApplied.toISOString().slice(0, 10)}
+                value={formData.dateApplied.toString().slice(0, 10)}
                 name="dateApplied"
                 onChange={handleOnChange}
               />
@@ -185,12 +145,13 @@ function JobApplicationForm() {
           <Button variant="primary" type="submit">
             Submit
           </Button>{" "}
-          <Button variant="secondary" type="button" onClick={handleClear}>
-            Clear
+          <Button variant="secondary" type="button" onClick={handleBack}>
+            Back
           </Button>
         </Form.Group>
       </Form>
     </>
   );
 }
-export default JobApplicationForm;
+
+export default EditJobApplicationPage;
