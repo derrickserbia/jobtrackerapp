@@ -7,7 +7,9 @@ function JobApplicationDetailsPage() {
   const [jobApplicationData, setJobApplicationData] =
     useState<JobApplication>();
 
-  const mapJobApplicationDetails = (jobApplicationFromApi): JobApplication => {
+  const mapJobApplicationDetails = (
+    jobApplicationFromApi: any
+  ): JobApplication => {
     const output: JobApplication = {
       id: jobApplicationFromApi.id,
       jobTitle: jobApplicationFromApi.jobTitle,

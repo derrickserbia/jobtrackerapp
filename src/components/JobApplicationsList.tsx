@@ -113,7 +113,7 @@ const jobApplicationsFromApi = [
 
 function JobApplicationsList() {
   const mapJobApplicationListItem = (
-    jobApplicationFromApi
+    jobApplicationFromApi: any
   ): JobApplicationListItem => {
     const output: JobApplicationListItem = {
       id: jobApplicationFromApi.id,

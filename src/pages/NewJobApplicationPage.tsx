@@ -1,5 +1,6 @@
 import { JobApplication } from "../models/JobApplication";
 import JobApplicationForm from "../components/JobApplicationForm";
+import { useState } from "react";
 
 const emptyJobApplication: JobApplication = {
   id: 0,
@@ -17,8 +18,23 @@ const emptyJobApplication: JobApplication = {
 };
 
 function NewJobApplicationPage() {
-  const handleCreate = (jobApplication: JobApplication) => {
-    console.log(jobApplication);
+  const handleCreate = async (jobApplication: JobApplication) => {
+    try {
+      let headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
+      let response = await fetch("/api/jobapplications", {
+        method: "POST",
+        body: JSON.stringify(jobApplication),
+        headers: headers,
+      });
+      if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error creating job application:", error);
+      throw error;
+    }
   };
 
   return (

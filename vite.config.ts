@@ -7,10 +7,12 @@ export default defineConfig({
   server: {
     port: 5000, //client port
     host: true,
-    // proxy: {
-    //   "/jobapplications": {
-    //     target: "http://localhost:5000", //API port
-    //   },
-    // },
+    proxy: {
+      "/api": {
+        target: "https://localhost:7020",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 });
