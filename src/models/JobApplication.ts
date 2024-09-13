@@ -10,5 +10,4 @@ export interface JobApplication {
   maxSalary: number;
   postingUrl: string;
   hiringTeam: string;
-  techStack: string[];
 }

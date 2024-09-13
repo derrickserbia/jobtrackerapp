@@ -9,6 +9,7 @@ import NewJobApplicationPage from "./pages/NewJobApplicationPage.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import JobApplicationsListPage from "./pages/JobApplicationsListPage.tsx";
 import JobApplicationDetailsPage from "./pages/JobApplicationDetailsPage.tsx";
+import EditJobApplicationPage from "./pages/EditJobApplicationPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/jobapplications/:id",
     element: <JobApplicationDetailsPage />,
+  },
+  {
+    path: "/jobapplications/edit",
+    element: <EditJobApplicationPage />,
   },
 ]);
 

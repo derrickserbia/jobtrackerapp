@@ -1,6 +1,5 @@
 import { JobApplication } from "../models/JobApplication";
 import JobApplicationForm from "../components/JobApplicationForm";
-import { useState } from "react";
 
 const emptyJobApplication: JobApplication = {
   id: 0,
@@ -14,16 +13,15 @@ const emptyJobApplication: JobApplication = {
   maxSalary: 0,
   jobDescription: "",
   notes: "",
-  techStack: [],
 };
 
 function NewJobApplicationPage() {
   const handleCreate = async (jobApplication: JobApplication) => {
     try {
-      let headers = new Headers();
+      const headers = new Headers();
       headers.append("Content-Type", "application/json");
 
-      let response = await fetch("/api/jobapplications", {
+      const response = await fetch("/api/jobapplications", {
         method: "POST",
         body: JSON.stringify(jobApplication),
         headers: headers,
